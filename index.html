@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kioshii CV Creator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="form-page">
+
+    <nav class="top-nav glass-panel">
+        <div class="nav-logo"><i class="fas fa-layer-group"></i> CV.kioshi</div>
+        <div class="nav-right">
+            <div id="realtime-clock" class="clock-display"></div>
+            <button id="theme-toggle" class="icon-btn" title="Toggle Light/Dark Mode">
+                <i class="fas fa-sun"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div id="landing-section" class="landing-wrapper">
+        <h1 class="hero-title">Build Your Ultimate CV</h1>
+        <p class="hero-subtitle">Generate a pristine, single-page professional layout in seconds.</p>
+        <button class="btn-primary big-btn" onclick="showForm()">Create a CV <i class="fas fa-arrow-right"></i></button>
+    </div>
+
+    <div id="form-section" class="form-container glass-panel" style="display: none;">
+        <h2>Configure Your Profile</h2>
+        <form action="index.php" method="POST" enctype="multipart/form-data">
+            
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label for="profile_pic">Profile Picture:</label>
+                    <input type="file" name="profile_pic" id="profile_pic" accept="image/*" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" name="name" placeholder="e.g. Liam Vance" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role / Subtitle:</label>
+                    <input type="text" name="role" placeholder="e.g. Lead Architect" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="text" name="phone" placeholder="(555) 123-4567" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" name="email" placeholder="liam@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="social">Social Link / Website:</label>
+                    <input type="text" name="social" placeholder="linkedin.com/in/liam">
+                </div>
+                <div class="form-group">
+                    <label for="address">Location / Address:</label>
+                    <input type="text" name="address" placeholder="New York, NY">
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="summary">Profile Summary:</label>
+                    <textarea name="summary" rows="3" placeholder="A brief overview of your professional background..." required></textarea>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="education">Education:</label>
+                    <textarea name="education" rows="3" placeholder="Degree, University, Year..." required></textarea>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="experience">Experience:</label>
+                    <textarea name="experience" rows="3" placeholder="Job Title, Company, Duties..." required></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="awards">Awards & Recognitions:</label>
+                    <textarea name="awards" rows="2" placeholder="List any awards here..."></textarea>
+                </div>
+            </div>
+
+            <div class="skills-section">
+                <h3>Skills & Levels</h3>
+                <p class="sub-text">Enter the skill name and a percentage (0-100)</p>
+                <div class="skill-inputs">
+                    <input type="text" name="skill1_name" placeholder="Primary Skill">
+                    <input type="number" name="skill1_pct" placeholder="%" min="0" max="100">
+                </div>
+                <div class="skill-inputs">
+                    <input type="text" name="skill2_name" placeholder="Secondary Skill">
+                    <input type="number" name="skill2_pct" placeholder="%" min="0" max="100">
+                </div>
+                <div class="skill-inputs">
+                    <input type="text" name="skill3_name" placeholder="Tertiary Skill">
+                    <input type="number" name="skill3_pct" placeholder="%" min="0" max="100">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary">Generate Layout <i class="fas fa-check"></i></button>
+        </form>
+    </div>
+
+    <script>
+        
+        function updateClock() {
+            const now = new Date();
+            const options = { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            document.getElementById('realtime-clock').innerText = now.toLocaleString('en-US', options);
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function showForm() {
+            document.getElementById('landing-section').style.display = 'none';
+            document.getElementById('form-section').style.display = 'block';
+        }
+
+        const toggleBtn = document.getElementById('theme-toggle');
+        const body = document.body;
+
+  
+        if (localStorage.getItem('theme') === 'light') {
+            body.classList.add('light-mode');
+            toggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            if (body.classList.contains('light-mode')) {
+                localStorage.setItem('theme', 'light');
+                toggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                localStorage.setItem('theme', 'dark');
+                toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        });
+    </script>
+</body>
+</html>
